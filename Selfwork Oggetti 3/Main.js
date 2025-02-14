@@ -16,33 +16,60 @@ let bowling = {
     'punteggiGiocatori': function() {
         // Creare 10 punteggi casuali
         const tiri = 10;
-        let somma1 = 0;
-        let somma2 = 0;
-        let somma3 = 0;
-        let somma4 = 0;
-        
-        for (let i = 1; i <= tiri; i++) {
-            somma1 = somma1 + Math.floor(Math.random() * (10 - 1 + 1) + 1);
-            somma2 = somma2 + Math.floor(Math.random() * (10 - 1 + 1) + 1);
-            somma3 = somma3 + Math.floor(Math.random() * (10 - 1 + 1) + 1);
-            somma4 = somma4 + Math.floor(Math.random() * (10 - 1 + 1) + 1);
+        this.players.forEach(giocatori => {
+            for (let i = 1; i <= tiri; i++) {
+                giocatori.scores.push(Math.floor(Math.random() * (10 - 1 + 1) + 1))
+                
+            }
             
-        }
-
-        console.log(`Livio ha totalizzato ${somma1} punti`);
-        console.log(`Paola ha totalizzato ${somma2} punti`);
-        console.log(`Filippo ha totalizzato ${somma3} punti`);
-        console.log(`Giuseppe ha totalizzato ${somma4} punti`);
+        });
     },
 
     'aggiungiGiocatori': function(nome) {
+        const tiri = 10;
+        let nouvoGiocatore = {name: nome, scores: []}
+
         this.players.push(nome);
         console.log(`Il giocatore ${nome} è stato aggiunto`);
+
+        for (let i = 1; i <= tiri; i++) {
+            nouvoGiocatore.scores.push(Math.floor(Math.random() * (10 - 1 + 1) + 1))
+            
+        }
+        
     },
 
+    'punteggioTotale': function() {
+        this.players.forEach(giocatori => {
+            let totale = giocatori.scores.reduce((num1, num2) => num1 + num2);
+            giocatori.tot = totale;
+            
+        });
+        
+        this.players.sort((a, b) => b.tot - a.tot);
+        
+    },
+
+    'winner': function() {
+        let winner = this.players[0];
+        console.log(`Il vincitore è ${winner.name} totalizzando ${winner.tot} punti`);
+        
+    },
+
+    'classifica': function() {
+        console.log('La classifica finale è:');
+        this.players.forEach(giocatori => {
+            console.log(`${giocatori.name} con ${giocatori.tot} punti`);
+            
+        });
+        
+    }
 
 }
 
 bowling.mostraGiocatori();
 bowling.punteggiGiocatori();
 bowling.aggiungiGiocatori('Lorenzo');
+bowling.punteggioTotale();
+bowling.winner();
+bowling.classifica();
