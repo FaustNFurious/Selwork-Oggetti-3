@@ -29,13 +29,14 @@ let bowling = {
         const tiri = 10;
         let nouvoGiocatore = {name: nome, scores: []}
 
-        this.players.push(nome);
-        console.log(`Il giocatore ${nome} è stato aggiunto`);
-
+        // Creare 10 punteggi casuali
         for (let i = 1; i <= tiri; i++) {
             nouvoGiocatore.scores.push(Math.floor(Math.random() * (10 - 1 + 1) + 1))
             
         }
+
+        this.players.push(nouvoGiocatore);
+        console.log(`Il giocatore ${nome} è stato aggiunto`);
         
     },
 
